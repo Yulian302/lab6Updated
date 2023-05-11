@@ -10,4 +10,4 @@ def initial():
 @app.route('/home')
 def home():
     products = Product.query.all()
-    return jsonify([{'id':product.id,'name':product.name,'price':product.price,'img_url':product.img_url,'description':product.description} for product in products])
+    return jsonify([{'id':product.id,'name':product.name,'price':product.price,'img_url':product.img_url,'description':product.description,'category':product.category} for product in products])
