@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
@@ -17,6 +18,13 @@ DB_HOST = environ.get('DB_HOST')
 DB_PORT = environ.get('DB_PORT')
 DB_DRIVER = 'psycopg2'
 # app config
+
+# login manager
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+
 
 app.config['SQLALCHEMY_DATABASE_URI']=f'postgresql+{DB_DRIVER}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 # db connection
