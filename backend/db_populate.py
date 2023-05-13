@@ -1,8 +1,10 @@
 from app import db,app
 from models.Product import Product
+from models.User import User
+from werkzeug.security import generate_password_hash
 
-product1 = Product(name='fsdfd',price=323,img_url='23432',description='fsdsdfdfs')
+user1 = User(username='Yulian302',password_hash=generate_password_hash('3022003bu'))
 
 with app.app_context():
-    db.session.add(product1)
+    db.session.add(user1)
     db.session.commit()

@@ -1,11 +1,9 @@
 from flask import Flask
-from flask_login import LoginManager,login_required,login_user,logout_user
-from werkzeug.security import check_password_hash,generate_password_hash
-from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 app = Flask(__name__)
 
@@ -17,20 +15,33 @@ DB_NAME = environ.get('DB_NAME')
 DB_HOST = environ.get('DB_HOST')
 DB_PORT = environ.get('DB_PORT')
 DB_DRIVER = 'psycopg2'
-# app config
 
 # login manager
-login_manager = LoginManager()
-login_manager.init_app(app)
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+# login_manager.login_view='/login'
 
-
-
-
+# app config
+app.secret_key="sOmEseCrEt6key"
 app.config['SQLALCHEMY_DATABASE_URI']=f'postgresql+{DB_DRIVER}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+
+
+# jwt
+app.config['JWT_SECRET_KEY']='neo_bruno_secret'
+app.config['JWT_ACCESS_TOKEN_EXPIRES']=timedelta(hours=1)
+jwt = JWTManager(app)
+
 # db connection
 db = SQLAlchemy(app)
 # engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 migrate = Migrate(app,db)
+
+
+# blueprints
+from routes.rest_routes import auth as auth_blueprint
+app.register_blueprint(auth_blueprint)
+
+
 
 import models.Product
 import routes.rest_routes
