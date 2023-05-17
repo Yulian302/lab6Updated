@@ -23,29 +23,24 @@ DB_DRIVER = 'psycopg2'
 # login_manager.login_view='/login'
 
 # app config
-app.secret_key="sOmEseCrEt6key"
-app.config['SQLALCHEMY_DATABASE_URI']=f'postgresql+{DB_DRIVER}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+app.secret_key = "sOmEseCrEt6key"
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+{DB_DRIVER}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 
 # jwt
-app.config['JWT_SECRET_KEY']='neo_bruno_secret'
-app.config['JWT_ACCESS_TOKEN_EXPIRES']=timedelta(hours=1)
+app.config['JWT_SECRET_KEY'] = 'neo_bruno_secret'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 # db connection
 db = SQLAlchemy(app)
 # engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-migrate = Migrate(app,db)
-
-
+migrate = Migrate(app, db)
+import routes.rest_routes
+import models.Product
 # blueprints
 from routes.rest_routes import auth as auth_blueprint
 app.register_blueprint(auth_blueprint)
 
-
-
-import models.Product
-import routes.rest_routes
 # if __name__=='__main__':
 #     app.run(debug=True)
-
