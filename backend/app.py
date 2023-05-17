@@ -4,6 +4,7 @@ from os import environ
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from flask_cors import CORS
 
 app = Flask(__name__)
 
