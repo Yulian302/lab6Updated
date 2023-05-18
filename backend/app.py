@@ -23,8 +23,8 @@ DB_DRIVER = 'psycopg2'
 # login_manager.login_view='/login'
 
 # app config
-app.secret_key = "sOmEseCrEt6key"
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+{DB_DRIVER}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+app.config['SECRET_KEY']= "sOmEseCrEt6key"
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
 
 
 # jwt
