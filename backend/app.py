@@ -24,7 +24,11 @@ DB_DRIVER = 'psycopg2'
 
 # app config
 app.config['SECRET_KEY']= "sOmEseCrEt6key"
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
+
+# for docker
+# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
+# for dev
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+{DB_DRIVER}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 
 # jwt

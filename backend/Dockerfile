@@ -8,11 +8,6 @@ ENV PYTHONUNBUFFERED 1
 
 COPY . .
 
-ENV DB_USERNAME=$DB_USERNAME
-ENV DB_PASSWORD=$DB_PASSWORD
-ENV DB_NAME=$DB_NAME
-ENV DB_HOST=$DB_HOST
-ENV DB_PORT=$DB_PORT
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt

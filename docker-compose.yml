@@ -1,20 +1,32 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: ./backend/
     ports:
       - '5000:5000'
     depends_on:
       - db
     env_file:
       - ./.env
+  react-app:
+    build: 
+      context: ./frontend/app/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://web:5000
   db:
     image: postgres
     environment:
-      - DATABASE_URL=postgresql${DB_DRIVER}://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - DATABASE_URL=${DATABASE_URL}
+      - POSTGRES_HOST=${DB_HOST}
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d postgres'"]
       interval: 10s
