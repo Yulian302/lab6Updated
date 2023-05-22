@@ -9,6 +9,7 @@ services:
       - db
     env_file:
       - ./.env
+    container_name: flask
   react-app:
     build: 
       context: ./frontend/app/
@@ -17,6 +18,7 @@ services:
       - "3000:3000"
     environment:
       - REACT_APP_API_URL=http://web:5000
+    container_name: react
   db:
     image: postgres
     environment:
@@ -32,3 +34,4 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    container_name: postgresDB
