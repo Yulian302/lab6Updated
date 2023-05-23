@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-depl
+  labels:
+    app: nginx-deployment
+  creationTimestamp: 2023-05-23T15:00:00.05Z
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-pod
+  template:
+    metadata:
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.16
+        ports:
+          - containerPort: 8080
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "200Mi"
